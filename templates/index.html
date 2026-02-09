@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #9ad7e7, #d7b5ff);
+}
+
+/* PAGE */
+.page {
+    max-width: 950px;
+    margin: 40px auto;
+}
+
+/* HEADER */
+.header-card {
+    position: relative;
+    background: white;
+    padding: 45px 40px 45px 160px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    margin-bottom: 30px;
+}
+
+/* PROFILE IMAGE */
+.profile-pic {
+    position: absolute;
+    left: 35px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* TITLE */
+.title {
+    text-align: center;
+    font-size: 30px;
+    margin: 0;
+}
+
+/* FORM */
+.form-card {
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-grid input {
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.form-grid input:focus {
+    outline: none;
+    border-color: #56ab91;
+}
+
+/* BUTTON */
+.predict-btn {
+    grid-column: span 2;
+    padding: 15px;
+    background: #56ab91;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.predict-btn:hover {
+    background: #3c8c74;
+}
+
+/* RESULT */
+.result-card {
+    margin-top: 25px;
+    background: #eef7f3;
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.result-title {
+    font-size: 18px;
+    color: #555;
+}
+
+.result-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2d6a4f;
+    margin-top: 8px;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #333;
+}
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <div class="header-card">
+        <img src="{{ url_for('static', filename='Images/Sachin.jpg') }}" class="profile-pic">
+        <h1 class="title">🏠 House Sale Prediction</h1>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card">
+        <form action="/predict" method="POST" class="form-grid">
+
+            <input type="number" name="bedrooms" placeholder="Bedrooms" required>
+            <input type="number" name="bathrooms" step="0.1" placeholder="Bathrooms" required>
+
+            <input type="number" name="sqft_living" placeholder="Sqft Living" required>
+            <input type="number" name="sqft_lot" placeholder="Sqft Lot" required>
+
+            <input type="number" name="floors" step="0.1" placeholder="Floors" required>
+            <input type="number" name="waterfront" placeholder="Waterfront (0 or 1)" required>
+
+            <input type="number" name="view" placeholder="View" required>
+            <input type="number" name="condition" placeholder="Condition" required>
+
+            <input type="number" name="sqft_above" placeholder="Sqft Above" required>
+            <input type="number" name="sqft_basement" placeholder="Sqft Basement" required>
+
+            <input type="number" name="yr_built" placeholder="Year Built" required>
+            <input type="number" name="yr_renovated" placeholder="Year Renovated (0 if none)" required>
+
+            <input type="number" name="city" placeholder="City (encoded)" required>
+            <input type="number" name="country" placeholder="Country (encoded)" required>
+
+            <input type="number" name="year" placeholder="Year" required>
+            <input type="number" name="month" placeholder="Month" required>
+            <input type="number" name="day" placeholder="Day" required>
+
+            <button type="submit" class="predict-btn">
+                Predict Price
+            </button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result-card">
+            <p class="result-title">Estimated House Price</p>
+            <p class="result-value">{{ prediction_text }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <h2>Project By Sachin</h2>
+<!--        <p>Data Scientist & NLP Engineer</p>-->
+    </div>
+
+</div>
+</body>
+</html>
